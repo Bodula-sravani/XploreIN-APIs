@@ -12,6 +12,8 @@ namespace XploreIN
         }
 
         public DbSet<RuralDestination> ruralDestinations { get; set; }
+
+        public DbSet<DestinationMedia> destinationMedias { get; set; }
     }
 
 }
