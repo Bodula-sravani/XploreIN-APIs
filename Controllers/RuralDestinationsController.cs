@@ -31,16 +31,23 @@ namespace XploreIN.Controllers
           }
             return await _context.ruralDestinations.ToListAsync();
         }
-
         // GET: api/RuralDestinations/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RuralDestination>> GetRuralDestination(int id)
+    
+
+
+        [HttpGet("{name}")]
+        public async Task<ActionResult<RuralDestination>> GetRuralDestination(string name)
         {
-          if (_context.ruralDestinations == null)
-          {
-              return NotFound();
-          }
-            var ruralDestination = await _context.ruralDestinations.FindAsync(id);
+            if (_context.ruralDestinations == null)
+            {
+                return NotFound();
+            }
+
+            var ruralDestination = await _context.ruralDestinations.Where(dm => EF.Functions.Like(dm.Name.ToLower(), $"%{name.ToLower()}%")).FirstOrDefaultAsync();
+         
+
+
+                //Where(dm => EF.Functions.Like(dm.Name.ToLower(), $"%{name.ToLower()}%"));
 
             if (ruralDestination == null)
             {
