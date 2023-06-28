@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XploreIN;
 
@@ -11,13 +12,15 @@ using XploreIN;
 namespace XploreIN.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230628051644_Add-UserPosts table")]
+    partial class AddUserPoststable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -245,31 +248,6 @@ namespace XploreIN.Migrations
                     b.ToTable("destinationMedias");
                 });
 
-            modelBuilder.Entity("XploreIN.Models.PostMedia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_At")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Media_URL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("postMedias");
-                });
-
             modelBuilder.Entity("XploreIN.Models.RuralDestination", b =>
                 {
                     b.Property<int>("Id")
@@ -434,17 +412,6 @@ namespace XploreIN.Migrations
                         .IsRequired();
 
                     b.Navigation("RuralDestination");
-                });
-
-            modelBuilder.Entity("XploreIN.Models.PostMedia", b =>
-                {
-                    b.HasOne("XploreIN.Models.UserPost", "UserPost")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserPost");
                 });
 
             modelBuilder.Entity("XploreIN.Models.UserItineraries", b =>

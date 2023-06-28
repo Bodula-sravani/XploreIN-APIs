@@ -24,8 +24,8 @@ namespace XploreIN
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); 
-            builder.Services.AddControllers()
-            .AddControllersAsServices();
+            //builder.Services.AddControllers()
+            //.AddControllersAsServices();
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
