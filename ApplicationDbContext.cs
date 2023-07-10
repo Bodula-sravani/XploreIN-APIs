@@ -16,6 +16,10 @@ namespace XploreIN
         public DbSet<DestinationMedia> destinationMedias { get; set; }
 
         public DbSet<UserItineraries> UserItineraries { get; set; }
+
+        public DbSet<UserPost> UserPosts { get; set; }
+
+        public DbSet<PostMedia> postMedias { get; set; }
     }
 
 }
