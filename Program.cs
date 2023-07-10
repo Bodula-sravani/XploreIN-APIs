@@ -46,7 +46,15 @@ namespace XploreIN
                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
                    };
                });
-
+           builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -57,6 +65,7 @@ namespace XploreIN
             //}
 
             app.UseHttpsRedirection();
+            app.UseCors();
 
             app.UseAuthorization();
 
