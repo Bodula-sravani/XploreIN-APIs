@@ -32,9 +32,9 @@ namespace XploreIN.Controllers
         public async Task<ActionResult<IEnumerable<UserPost>>> GetUserPosts()
         {
             // Get the authenticated user's email from the token
-            string email = User.FindFirst(ClaimTypes.Email)?.Value;
+            //string email = User.FindFirst(ClaimTypes.Email)?.Value;
 
-            var userPosts = await _context.UserPosts.Where(u => u.User.Email == email).ToListAsync();
+            var userPosts = await _context.UserPosts.Include(up => up.User).ToListAsync();
             if (userPosts == null)
           {
               return NotFound();
@@ -43,21 +43,23 @@ namespace XploreIN.Controllers
         }
 
         // GET: api/UserPosts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserPost>> GetUserPost(int id)
+        [HttpGet("{token}")]
+        public async Task<ActionResult<IEnumerable<UserPost>>> GetUserPost(string token)
         {
           if (_context.UserPosts == null)
           {
               return NotFound();
           }
-            var userPost = await _context.UserPosts.FindAsync(id);
+            string email = User.FindFirst(ClaimTypes.Email)?.Value;
 
-            if (userPost == null)
+            var userPosts = await _context.UserPosts.Where(u => u.User.Email == email).ToListAsync();
+
+            if (userPosts == null)
             {
                 return NotFound();
             }
 
-            return userPost;
+            return userPosts;
         }
 
         // PUT: api/UserPosts/5
@@ -111,7 +113,8 @@ namespace XploreIN.Controllers
             _context.UserPosts.Add(userPost);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserPost", new { id = userPost.Id }, userPost);
+            //return CreatedAtAction("GetUserPost", new { id = userPost.Id }, userPost);
+            return Ok();
         }
 
         // DELETE: api/UserPosts/5
@@ -131,7 +134,7 @@ namespace XploreIN.Controllers
             _context.UserPosts.Remove(userPost);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool UserPostExists(int id)
