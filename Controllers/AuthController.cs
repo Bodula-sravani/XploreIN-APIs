@@ -87,7 +87,8 @@ namespace XploreIN.Controllers
             {
                 var tokenString = GenerateJwtToken(user);
 
-                return Ok(new { Token = tokenString });
+                return Ok(new { Token = tokenString, UserName = user.UserName });
+
             }
 
             return BadRequest("Invalid username or password.");
@@ -109,13 +110,21 @@ namespace XploreIN.Controllers
                 await _userManager.UpdateAsync(tempUser);
                 // Add user to a role
                 await _userManager.AddToRoleAsync(tempUser, "User");
-                var tokenString = GenerateJwtToken(user);
-                return Ok(new { Token = tokenString });
+                //  var tokenString = GenerateJwtToken(user);
+                //   return Ok(new { Token = tokenString });
+                return Ok();
             }
             else
             {
-                // Handle errors and return appropriate response
-                return BadRequest(result.Errors);
+                //// Handle errors and return appropriate response
+                //return BadRequest(result.Errors);
+
+
+                // Extract the error descriptions
+                var errorDescriptions = result.Errors.Select(error => error.Description);
+
+                // Return the error descriptions in the response
+                return BadRequest(new { Errors = errorDescriptions });
             }
         }
 
