@@ -20,6 +20,8 @@ namespace XploreIN
         public DbSet<UserPost> UserPosts { get; set; }
 
         public DbSet<PostMedia> postMedias { get; set; }
+
+        public DbSet<UserFavorites> UserFavorites { get; set; }
     }
 
 }
