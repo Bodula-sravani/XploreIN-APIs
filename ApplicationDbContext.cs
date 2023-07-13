@@ -22,6 +22,8 @@ namespace XploreIN
         public DbSet<PostMedia> postMedias { get; set; }
 
         public DbSet<UserFavorites> UserFavorites { get; set; }
+
+        public DbSet<ItineraryItem> ItineraryItems { get; set; }
     }
 
 }
